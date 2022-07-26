@@ -17,7 +17,7 @@ def getPage():
     options = Options()
     options.headless = True
 
-    driver = webdriver.Firefox(service=Service(executable_path='driver/ubuntu/geckodriver'), options=options)
+    driver = webdriver.Firefox(service=Service(executable_path='driver/ubuntu/geckodriver   '), options=options)
     # driver = webdriver.Firefox(service=Service(executable_path='driver/geckodriver'), options=options)
 
     driver.get(monkeypox_website)
@@ -48,6 +48,14 @@ def updateTexas(df):
     updated_df = pd.concat([old_data_df, new_data])
     updated_df.to_csv('data/texas_data.csv', index=False)
 
+def getTexasPhrData():
+    df = pd.read_html('https://dshs.texas.gov/news/updates.shtm#monkeypox')[0].iloc[:-1]
+
+    # Find and replace any instance of "PHR " in the "Public Health Region" with nothing.
+    df['Public Health Region'] = df['Public Health Region'].str.replace('PHR ', '')
+
+    df.to_csv('data/texas_phr_data.csv', index=False)
+
 cdc_page = getPage()
 
 us_cdc_table = pd.read_html(cdc_page)[0]
@@ -55,5 +63,7 @@ us_cdc_table = pd.read_html(cdc_page)[0]
 us_cdc_table.to_csv('data/us_cdc_table.csv', index=False)
 
 updateTexas(us_cdc_table)
+
+getTexasPhrData()
 
 
