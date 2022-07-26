@@ -17,7 +17,7 @@ def getPage():
     options = Options()
     options.headless = True
 
-    driver = webdriver.Firefox(service=Service(executable_path='driver/ubuntu/geckodriver   '), options=options)
+    driver = webdriver.Firefox(service=Service(executable_path='driver/ubuntu/geckodriver'), options=options)
     # driver = webdriver.Firefox(service=Service(executable_path='driver/geckodriver'), options=options)
 
     driver.get(monkeypox_website)
