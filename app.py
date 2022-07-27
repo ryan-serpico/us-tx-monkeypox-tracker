@@ -90,6 +90,47 @@ def getBexarCases():
 
     df.to_csv('data/bexar_table.csv', index=False)
 
+def getHarrisCases():
+    print('Getting Harris cases...') 
+    header = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest"
+        }
+    url = 'https://publichealth.harriscountytx.gov/monkeypox'
+    r = requests.get(url, headers=header)
+    df = pd.read_html(r.text)[0]
+
+    # Get the first value from the "City of Houston" column
+    harris_cases = df.iloc[0]['City of Houston']
+    uninc_cases = df.iloc[0]['Unincorporated Harris County']
+
+    date = datetime.datetime.now().strftime("%-m/%-d/%y")
+    data = {'Date': [date], 'Harris County Count': [harris_cases], 'Unincorporated Harris County Count': [uninc_cases]}
+
+    new_data =  pd.DataFrame(data)
+    old_data_df = pd.read_csv('data/harris_log.csv')
+    updated_df = pd.concat([old_data_df, new_data])
+    updated_df.to_csv('data/harris_log.csv', index=False)
+
+    try:
+        harris_cases_last = pd.read_csv('data/harris_log.csv').iloc[-2]['Harris County Count']
+        uninc_cases_last = pd.read_csv('data/harris_log.csv').iloc[-2]['Unincorporated Harris County Count']
+
+        harris_cases_new = harris_cases - harris_cases_last
+        uninc_cases_new = uninc_cases - uninc_cases_last
+    except:
+        harris_cases_new = 0
+        uninc_cases_new = 0
+
+
+    table_df = pd.DataFrame({
+        '': ['Harris County', 'Unincorporated Harris County'],
+        'All time': [harris_cases, uninc_cases],
+        'New': ['+' + str(harris_cases_new), '+' + str(uninc_cases_new)]
+    })
+
+    table_df.to_csv('data/harris_table.csv', index=False)
+
 cdc_page = getPage()
 
 us_cdc_table = pd.read_html(cdc_page)[0]
@@ -101,3 +142,4 @@ updateTexas(us_cdc_table)
 getTexasPhrData()
 
 getBexarCases()
+getHarrisCases()
