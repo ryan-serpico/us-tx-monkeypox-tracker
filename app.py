@@ -1,6 +1,8 @@
 import datetime
 
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -56,6 +58,38 @@ def getTexasPhrData():
 
     df.to_csv('data/texas_phr_data.csv', index=False)
 
+def getBexarCases():
+    url = 'https://www.sanantonio.gov/health/news/alerts/monkeypox'
+    page = requests.get(url)    
+    soup = BeautifulSoup(page.content, 'html.parser')
+    print('Getting Bexar cases...')
+    bexar_cases = soup.find('div', class_='alert alert-error alert-block fade in').find_all('strong')[1].next_sibling.strip().replace(': ', '')
+    bexar_cases = int(bexar_cases)
+
+    # Print today's date
+    date = datetime.datetime.now().strftime("%-m/%-d/%y")
+
+    data = {'Date': [date], 'Count': [bexar_cases]}
+
+    new_data =  pd.DataFrame(data)
+    old_data_df = pd.read_csv('data/bexar_log.csv')
+    updated_df = pd.concat([old_data_df, new_data])
+    updated_df.to_csv('data/bexar_log.csv', index=False)
+
+    # Get the second to last value from the "Count" column in the bexar_log.csv file
+    try:
+        bexar_cases_last = pd.read_csv('data/bexar_log.csv').iloc[-2]['Count']
+        new_cases = bexar_cases - bexar_cases_last
+    except:
+        new_cases = 0   
+    
+
+    df = pd.DataFrame(
+        {'All time': [bexar_cases],
+        'New': ['+' + str(new_cases)]})
+
+    df.to_csv('data/bexar_table.csv', index=False)
+
 cdc_page = getPage()
 
 us_cdc_table = pd.read_html(cdc_page)[0]
@@ -66,4 +100,4 @@ updateTexas(us_cdc_table)
 
 getTexasPhrData()
 
-
+getBexarCases()
