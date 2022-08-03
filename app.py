@@ -146,6 +146,7 @@ def getTexasSevenDayAverages():
     df = pd.read_csv('data/texas_data.csv')
     df['New cases'] = df['Count'] - df['Count'].shift(1)
     df['7-day average'] = round(df['New cases'].rolling(7).mean(), 1)
+    df['Baseline'] = 0
     df = df.dropna()
     df.to_csv('data/texas_seven_day_averages.csv', index=False)
 
