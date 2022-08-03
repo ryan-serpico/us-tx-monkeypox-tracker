@@ -16,6 +16,7 @@ def getPage():
     monkeypox_website = 'https://www.cdc.gov/poxvirus/monkeypox/response/2022/us-map.html'
 
     # Create an options object to set the headless browser
+    
     options = Options()
     options.headless = True
 
