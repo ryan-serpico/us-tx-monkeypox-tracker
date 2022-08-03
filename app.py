@@ -16,7 +16,7 @@ def getPage():
     monkeypox_website = 'https://www.cdc.gov/poxvirus/monkeypox/response/2022/us-map.html'
 
     # Create an options object to set the headless browser
-    
+
     options = Options()
     options.headless = True
 
@@ -103,7 +103,7 @@ def getHarrisCases():
 
     # Get the first value from the "City of Houston" column
     harris_cases = df.iloc[0]['City of Houston']
-    uninc_cases = df.iloc[0]['Unincorporated Harris County']
+    uninc_cases = df.iloc[0]['Harris County']
 
     date = datetime.datetime.now().strftime("%-m/%-d/%y")
     data = {'Date': [date], 'Harris County Count': [harris_cases], 'Unincorporated Harris County Count': [uninc_cases]}
@@ -125,7 +125,7 @@ def getHarrisCases():
 
 
     table_df = pd.DataFrame({
-        '': ['Harris County', 'Unincorporated Harris County'],
+        '': ['City of Houston', 'Harris County'],
         'All time': [harris_cases, uninc_cases],
         'New': ['+' + str(harris_cases_new), '+' + str(uninc_cases_new)]
     })
