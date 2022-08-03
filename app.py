@@ -132,6 +132,22 @@ def getHarrisCases():
 
     table_df.to_csv('data/harris_table.csv', index=False)
 
+def getTexasAgeData():
+    df = pd.read_html('https://dshs.texas.gov/news/updates.shtm#monkeypox')[1].iloc[:-1]
+
+    df.to_csv('data/texas_age_data.csv', index=False)
+
+def getTexasSexData():
+    df = pd.read_html('https://dshs.texas.gov/news/updates.shtm#monkeypox')[2].iloc[:-1]
+
+    df.to_csv('data/texas_sex_data.csv', index=False)
+
+def getTexasSevenDayAverages():
+    df = pd.read_csv('data/texas_data.csv')
+    df['New cases'] = df['Count'] - df['Count'].shift(1)
+    df['7-day average'] = round(df['New cases'].rolling(7).mean(), 1)
+    df.to_csv('data/texas_seven_day_averages.csv', index=False)
+
 cdc_page = getPage()
 
 us_cdc_table = pd.read_html(cdc_page)[0]
@@ -139,8 +155,9 @@ us_cdc_table = pd.read_html(cdc_page)[0]
 us_cdc_table.to_csv('data/us_cdc_table.csv', index=False)
 
 updateTexas(us_cdc_table)
-
 getTexasPhrData()
-
 getBexarCases()
 getHarrisCases()
+getTexasAgeData()
+getTexasSexData()
+getTexasSevenDayAverages()
