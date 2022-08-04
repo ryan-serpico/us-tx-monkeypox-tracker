@@ -148,6 +148,8 @@ def getTexasSevenDayAverages():
     df['7-day average'] = round(df['New cases'].rolling(7).mean(), 1)
     df['Baseline'] = 0
     df = df.dropna()
+    # If a value in the "New cases" column is negative, set it to 0
+    df['New cases'] = df['New cases'].apply(lambda x: 0 if x < 0 else x)
     df.to_csv('data/texas_seven_day_averages.csv', index=False)
 
 cdc_page = getPage()
