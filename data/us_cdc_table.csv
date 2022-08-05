@@ -1,51 +1,53 @@
-StateSort by state in no order,Number of CasesSort by number of cases in no order
+LocationSort by location in no order,CasesSort by cases in no order
 Alabama,19
 Alaska,1
-Arizona,85
-Arkansas,5
+Arizona,90
+Arkansas,6
 California,826
-Colorado,53
-Connecticut,39
+Colorado,78
+Connecticut,43
 Delaware,5
-District Of Columbia,257
-Florida,525
-Georgia,504
+District Of Columbia,280
+Florida,577
+Georgia,544
 Hawaii,10
 Idaho,5
-Illinois,547
-Indiana,62
+Illinois,571
+Indiana,63
 Iowa,11
 Kansas,1
-Kentucky,8
-Louisiana,58
+Kentucky,9
+Louisiana,69
 Maine,2
-Maryland,157
-Massachusetts,134
-Michigan,56
-Minnesota,39
-Mississippi,4
-Missouri,12
+Maryland,162
+Massachusetts,157
+Michigan,65
+Minnesota,44
+Mississippi,6
+Missouri,13
+Montana,0
 Nebraska,10
 Nevada,26
 New Hampshire,14
-New Jersey,160
+New Jersey,188
 New Mexico,10
-New York,1666
-North Carolina,72
+New York,1748
+North Carolina,86
 North Dakota,1
-Ohio,34
-Oklahoma,10
-Oregon,75
-Pennsylvania,173
+Ohio,38
+Oklahoma,11
+Oregon,78
+Pennsylvania,192
 Puerto Rico,19
-Rhode Island,26
-South Carolina,23
+Rhode Island,28
+South Carolina,28
 South Dakota,1
-Tennessee,39
-Texas,527
-Utah,41
+Tennessee,40
+Texas,559
+Utah,43
 Vermont,1
-Virginia,105
-Washington,134
+Virginia,122
+Washington,174
 West Virginia,3
-Wisconsin,19
+Wisconsin,22
+Wyoming,0
