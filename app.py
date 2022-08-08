@@ -1,4 +1,5 @@
 import datetime
+import json
 
 import pandas as pd
 import requests
@@ -152,6 +153,20 @@ def getTexasSevenDayAverages():
     df['New cases'] = df['New cases'].apply(lambda x: 0 if x < 0 else x)
     df.to_csv('data/texas_seven_day_averages.csv', index=False)
 
+def createMetadata():
+    print('Creating metadata...')
+    # Save current date to variable in this format: Aug. 4, 2022
+    date = datetime.datetime.now().strftime("%b. %d, %Y")
+    s = f'Data as of {date}'
+    data = {}
+    
+    # Create nested dictionary with metadata
+    data['annotate'] = {'notes': s}
+
+    json_data = json.dumps(data)
+    with open('data/metadata.json', 'w') as f:
+        f.write(json_data)
+
 cdc_page = getPage()
 
 us_cdc_table = pd.read_html(cdc_page)[0]
@@ -165,3 +180,4 @@ getHarrisCases()
 getTexasAgeData()
 getTexasSexData()
 getTexasSevenDayAverages()
+createMetadata()
