@@ -1,6 +1,8 @@
 # Folders
 venv/
+historic_data
 
 # Files
 geckodriver.log
 playground.py
+commit_scraper.py
